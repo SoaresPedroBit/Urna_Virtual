@@ -1,6 +1,6 @@
 package urna.urna.Entity;
 
-public class Cargo {
-
-    private String cargo;
+public enum Cargo {
+    Prefeito,
+    Vereador
 }

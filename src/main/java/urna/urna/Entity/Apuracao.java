@@ -6,16 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class Eleitor extends Pessoa{
+public class Apuracao {
 
-    private String profissao;
-    private String celular;
-    private String telefoneFixo;
-    private String email;
-    private StatusEleitor statusEleitor;
-
+    private Integer totalVotos;
+    private List<Candidato> prefeitos;
+    private List<Candidato> vereadores;
 
 }
