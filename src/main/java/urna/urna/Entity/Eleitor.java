@@ -2,11 +2,11 @@ package urna.urna.Entity;
 
 public class Eleitor extends Pessoa{
 
-    public String profissao;
-    public String celular;
-    public String telefoneFixo;
-    public String email;
-    public enum statusEleitor{
+    private String profissao;
+    private String celular;
+    private String telefoneFixo;
+    private String email;
+    private enum statusEleitor{
         APTO,
         INATIVO,
         BLOQUEADO,

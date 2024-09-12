@@ -2,7 +2,7 @@ package urna.urna.Entity;
 
 public class Pessoa {
 
-    public String nome;
-    public String cpf;
+    private String nome;
+    private String cpf;
 
 }
