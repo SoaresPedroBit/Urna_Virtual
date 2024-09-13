@@ -10,25 +10,63 @@ import urna.urna.Repository.VotoRepository;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class VotoService {
 
     @Autowired
     VotoRepository votoRepository;
-
     @Autowired
     CandidatoRepository candidatoRepository;
     @Autowired
     EleitorRepository eleitorRepository;
     @Autowired
     Apuracao apuracao;
+    @Autowired
+    Eleitor eleitor;
 
 
 
-    public String votar(String cpf,Integer prefeito, Integer vereador){
+    public String votar(String cpf, Integer prefeito,Integer vereador){
         Eleitor eleitor = eleitorRepository.findByCpf(cpf);
         if (eleitor != null) {
+
+            if(eleitor.getStatusEleitor() == StatusEleitor.APTO) {
+
+                votarApto(prefeito,vereador);
+
+            }else if (eleitor.getStatusEleitor() == StatusEleitor.PENDENTE){
+
+                eleitor.setStatusEleitor(StatusEleitor.BLOQUEADO);
+
+                return "Eleitor estava pendente para votar e foi bloqueado";
+
+            }else if (eleitor.getStatusEleitor() == StatusEleitor.BLOQUEADO){
+                return "O eleitor esta bloqueado";
+
+            }else if(eleitor.getStatusEleitor() == StatusEleitor.VOTOU){
+                return "eleitor ja votou";
+            }else {
+                return "O eleitor esa inativo impossibilitado de votar";
+            }
+
+        }else {
+            return "cpf invaliido";
+
+        }
+        return "";
+        }
+
+        public Apuracao realizarApuracao(){
+
+
+
+        }
+
+
+        public String votarApto(Integer prefeito, Integer vereador){
+
             // Obtém a data e hora atuais formatadas
             LocalDateTime dataHora = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -36,7 +74,7 @@ public class VotoService {
 
             // Cria um novo voto
             Voto voto = new Voto();
-            voto.setDataHora(dataHoraFormatada);,
+            voto.setDataHora(dataHoraFormatada);
 
             // Busca os candidatos pelo número
             Candidato candidatoPrefeito = candidatoRepository.findByNumeroCandidato(prefeito);
@@ -55,19 +93,16 @@ public class VotoService {
 
                 // Salvar o voto
                 eleitor.setStatusEleitor(StatusEleitor.VOTOU);
-                int votosTotais =  apuracao.getTotalVotos();
+                int votosTotais = apuracao.getTotalVotos();
                 apuracao.setTotalVotos(votosTotais + 1);
-
-
+                String hash = UUID.randomUUID().toString();
+                voto.setComprovante(hash);
                 votoRepository.save(voto);
 
                 return "Voto registrado com sucesso!";
             } else {
                 return "Erro: Cargo incorreto para os candidatos.";
             }
-        }else{
-            return "cpf invaliido";
-        }
         }
 
 }
