@@ -21,10 +21,7 @@ public class VotoService {
     CandidatoRepository candidatoRepository;
     @Autowired
     EleitorRepository eleitorRepository;
-    @Autowired
-    Apuracao apuracao;
-    @Autowired
-    Eleitor eleitor;
+
 
 
 
@@ -58,11 +55,11 @@ public class VotoService {
         return "";
         }
 
-        public Apuracao realizarApuracao(){
-
-
-
-        }
+//        public Apuracao realizarApuracao(){
+//
+//
+//
+//        }
 
 
         public String votarApto(Integer prefeito, Integer vereador){
@@ -92,6 +89,8 @@ public class VotoService {
                 voto.setVereador(candidatoVereador);
 
                 // Salvar o voto
+                Apuracao apuracao = new Apuracao();
+                Eleitor eleitor =new Eleitor();
                 eleitor.setStatusEleitor(StatusEleitor.VOTOU);
                 int votosTotais = apuracao.getTotalVotos();
                 apuracao.setTotalVotos(votosTotais + 1);

@@ -30,13 +30,27 @@ public class EleitorService {
     public String atualizar(Eleitor eleitor,Long id){
         eleitor.setId(id);
         if(eleitor.getCpf() == null ||eleitor.getCpf().isEmpty() || eleitor.getEmail() == null || eleitor.getEmail().isEmpty() ){
-            eleitor.setStatusEleitor(StatusEleitor.PENDENTE);
-            this.eleitorRepository.save(eleitor);
-            return "Eleitor atualizado com informaçoes pendentes";
+            if(eleitor.getStatusEleitor() != StatusEleitor.INATIVO){
+                eleitor.setStatusEleitor(StatusEleitor.PENDENTE);
+                this.eleitorRepository.save(eleitor);
+                return "Eleitor atualizado com informaçoes pendentes";
+            }else{
+                eleitor.setStatusEleitor(StatusEleitor.INATIVO);
+                this.eleitorRepository.save(eleitor);
+                return "Eleitor atualizado com informaçoes pendentes";
+            }
+
         }else{
-            eleitor.setStatusEleitor(StatusEleitor.APTO);
-            this.eleitorRepository.save(eleitor);
-            return "Eleitor atualizado";
+            if(eleitor.getStatusEleitor() != StatusEleitor.INATIVO){
+                eleitor.setStatusEleitor(StatusEleitor.APTO);
+                this.eleitorRepository.save(eleitor);
+                return "Eleitor atualizado";
+            }else{
+                eleitor.setStatusEleitor(StatusEleitor.INATIVO);
+                this.eleitorRepository.save(eleitor);
+                return "Eleitor atualizado mas continua inativo";
+            }
+
         }
     }
     public Eleitor buscaId(Long id){
@@ -44,20 +58,24 @@ public class EleitorService {
         return eleitor.orElse(null);
     }
     public List<Eleitor> buscaTudo(){
-        return eleitorRepository.findAll();
+        return eleitorRepository.findAllByStatusEleitor(StatusEleitor.APTO);
 
     }
     public String deletar(Long id) {
         // Busca o eleitor pelo ID
-        Optional<Eleitor> optionalEleitor = eleitorRepository.findById(id);
+        Optional<Eleitor> eleitor1 = eleitorRepository.findById(id);
         // Verifica se o eleitor existe
-        if (optionalEleitor.isPresent()) {
-            Eleitor eleitor = optionalEleitor.get();
-            // Define o status como INATIVO
-            eleitor.setStatusEleitor(StatusEleitor.INATIVO);
-            // Salva as alterações no repositório
-            eleitorRepository.save(eleitor);
-            return "Eleitor marcado como inativo";
+        if (eleitor1.isPresent()) {
+            Eleitor eleitor = eleitor1.get();
+           if (eleitor.getStatusEleitor() != StatusEleitor.VOTOU) {
+               // Define o status como INATIVO
+               eleitor.setStatusEleitor(StatusEleitor.INATIVO);
+               // Salva as alterações no repositório
+               eleitorRepository.save(eleitor);
+               return "Eleitor marcado como inativo";
+           }else{
+               return "Usuário já votou,Não foi possível inativálo";
+           }
         } else {
             return "Eleitor não encontrado";
         }
