@@ -30,10 +30,6 @@ public class Candidato{
     @Enumerated(EnumType.STRING)
     private StatusCandidato statusCandidato;
     @Transient
-    private Integer votosApurados;
-    @OneToMany(mappedBy = "prefeito")
-    private List<Voto> votosPrefeito;
-    @OneToMany(mappedBy = "vereador")
-    private List<Voto> votosVereador;
+    private long votosApurados;
 
 }

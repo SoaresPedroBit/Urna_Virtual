@@ -19,12 +19,20 @@ public class Voto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
     private String dataHora;
-    @NotNull(message = "Preencha o numero do prefeito") @ManyToOne @JoinColumn(name = "prefeito_id")
+
+    @NotNull(message = "Preencha o numero do prefeito")
+    @ManyToOne
+    @JoinColumn(name = "prefeito_id")
     private Candidato prefeito;
-    @NotNull(message = "Preencha o numero do  vereador") @ManyToOne @JoinColumn(name = "vereador_id")
+
+    @NotNull(message = "Preencha o numero do  vereador")
+    @ManyToOne
+    @JoinColumn(name = "vereador_id")
     private Candidato vereador;
+
     @NotBlank
     private String comprovante;
 

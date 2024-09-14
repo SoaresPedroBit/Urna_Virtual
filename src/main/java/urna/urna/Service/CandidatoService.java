@@ -3,6 +3,7 @@ package urna.urna.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import urna.urna.Entity.Candidato;
+import urna.urna.Entity.Cargo;
 import urna.urna.Entity.StatusCandidato;
 import urna.urna.Repository.CandidatoRepository;
 
@@ -43,5 +44,14 @@ public class CandidatoService {
     public List<Candidato> buscaTudo(){
         return candidatoRepository.findAllByStatusCandidato(StatusCandidato.ATIVO);
     }
+
+    public List<Candidato> buscaTudoPrefeito(){
+        return  candidatoRepository.findAllByCargoAndStatusCandidato(Cargo.Prefeito,StatusCandidato.ATIVO);
+    }
+
+    public List<Candidato> buscaTudoVereador(){
+        return candidatoRepository.findAllByCargoAndStatusCandidato(Cargo.Vereador,StatusCandidato.ATIVO);
+    }
+
 
 }
