@@ -7,10 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
-
-import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -32,4 +29,6 @@ public class Candidato{
     @Transient
     private long votosApurados;
 
+    public Candidato(long id, String nome, String cpf, int numeroCandidato, Cargo cargo, StatusCandidato statusCandidato) {
+    }
 }

@@ -34,4 +34,13 @@ public class Eleitor{
     private StatusEleitor statusEleitor;
 
 
+    public Eleitor(String nome, String cpf, String profissao, String celular, String telefoneFixo, String email, StatusEleitor statusEleitor) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.profissao = profissao;
+        this.celular = celular;
+        this.telefoneFixo = telefoneFixo;
+        this.email = email;
+        this.statusEleitor = statusEleitor;
+    }
 }

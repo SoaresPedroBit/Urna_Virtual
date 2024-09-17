@@ -14,7 +14,7 @@ public class VotoController {
     @Autowired
     VotoService votoService;
 
-    @PostMapping("/votar/{cpf}/{prefeito}/{vereador}")
+    @PostMapping("/votar/{cpf}")
     public ResponseEntity<String>votar(@PathVariable String cpf,@RequestBody Voto voto){
         try {
             String menssagem = this.votoService.votar(cpf,voto);
@@ -24,6 +24,7 @@ public class VotoController {
         }
 
     }
+
     @GetMapping("/apuracao")
     public ResponseEntity<Apuracao> apuracao() {
         try {

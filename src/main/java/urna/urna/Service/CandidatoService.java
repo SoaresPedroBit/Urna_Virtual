@@ -40,6 +40,7 @@ public class CandidatoService {
     }
     public Optional<Candidato> buscaId(Long id){
         return this.candidatoRepository.findById(id);
+
     }
     public List<Candidato> buscaTudo(){
         return candidatoRepository.findAllByStatusCandidato(StatusCandidato.ATIVO);
