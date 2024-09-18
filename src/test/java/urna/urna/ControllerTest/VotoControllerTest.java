@@ -48,7 +48,5 @@ public class VotoControllerTest {
         apuracao.setVereadores(listaVereador);
         ResponseEntity<Apuracao> retorno = this.votoController.apuracao();
         assertEquals(HttpStatus.CREATED,retorno.getStatusCode());
-
-
     }
 }
